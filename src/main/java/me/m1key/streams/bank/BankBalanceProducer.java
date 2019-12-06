@@ -31,15 +31,15 @@ public class BankBalanceProducer {
 
         KafkaProducer<String, String> producer = new KafkaProducer<>(config);
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 10; i++) {
             String key = UUID.randomUUID().toString();
             final ProducerRecord<String, String> record =
                     new ProducerRecord<>("bank-balance-input", key, newRecordJson());
             producer.send(record, (metadata, e) -> {
                 if (e != null) {
-                    log.debug("Send failed for record {}", record, e);
+                    log.warn("Send failed for record {}", record, e);
                 } else {
-                    log.debug("Send succeeded for record {}", record);
+                    log.info("Send succeeded for record {}", record);
                 }
             });
         }
@@ -52,7 +52,7 @@ public class BankBalanceProducer {
         int amount = randomAmount();
         String date = FORMATTER.format(LocalDateTime.now());
 
-        return String.format("{\"Name\":\"%s}\", \"amount\":%d, \"time\":\"%s\"}", name, amount, date);
+        return String.format("{\"Name\":\"%s\", \"amount\":%d, \"time\":\"%s\"}", name, amount, date);
     }
 
     private static String randomName() {
