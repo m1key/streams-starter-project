@@ -1,4 +1,4 @@
-package me.m1key.streams;
+package me.m1key.streams.colours;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.Serdes;
